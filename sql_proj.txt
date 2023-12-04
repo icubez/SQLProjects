@@ -1,0 +1,377 @@
+View all SQL Commands 
+
+::: ****SOME SQL CODES**** :::
+
+
+
+-- create the table 
+
+CREATE TABLE Customer (
+  ID int,
+  First_name varchar (100),
+  Last_name varchar (100),
+  Address varchar (100),
+  City varchar (10),
+  State varchar (4), 
+  Zip_Code int (5)
+);
+
+-- insert some values 
+Insert into customer values(1234, 'Micheal', 'Weston', '123 Brickel', 'Miami', 'FL', 33135);
+Insert into customer values(1235, 'fiona', 'Glenanne', '123 Brickel', 'Miami', 'FL', 33135);
+Insert into customer values(1236, 'Sam', 'Axe', '123 Taimiami', 'Miami', 'FL', 33109);
+Insert into customer values(1237, 'Madeline', 'Weston', '945 Sunsetlane', 'Miami', 'FL', 33114);
+Insert into customer values(1238, 'Jesse', 'Porter', '9923 A1A', 'Miami', 'FL', 33132);
+Insert into customer values(1239, 'Barry', 'Burkowski', '3838 Orange Grove str', 'Miami', 'FL', 33314);
+
+--display the result
+
+select * from customer;
+
+
+CREATE TABLE Drink_order (
+ID int,
+customer_id int,
+drink_description varchar (100)
+);
+
+
+
+use employees;
+SELECT 
+    emp_no, COUNT(*) AS emp_count
+FROM
+    employees
+WHERE
+    emp_no > 1
+GROUP BY emp_no
+HAVING emp_count > 0
+ORDER BY emp_no
+LIMIT 5 , 10;
+
+use employees;
+
+select first_name, last_name from employees;
+
+
+use employees;
+
+SELECT
+first_name AS 'FIRST NAME' , last_name AS  'LAST NAME'
+FROM 
+EMPLOYEES;
+
+
+use employees;
+
+SELECT 
+    FIRST_NAME, LAST_NAME, CONCAT(FIRST_NAME, ' ', LAST_NAME)
+FROM
+    EMPLOYEES;
+
+ARITHMETIC
+
+use employees;
+SELECT 
+    SALARY,
+    SALARY * .01 AS WEEKLY,
+    SALARY * .01 * 4 AS MONTHLY,
+    SALARY * .01 * 4 * 52 AS YEARLY,
+    SALARY + 200 * .01 AS MULTIPLY_FIRST,
+    (SALARY + 200) * .01 AS ADD_FIRST,
+    SALARY * .01 / 7 AS DAILY,
+    SALARY DIV 3 AS DIV_OP,
+     SALARY % 3 AS MODE_OP
+FROM
+    SALARIES;
+
+use employees;
+SELECT DATE_FORMAT('2017-06-15', '%M %d %Y');
+SELECT 
+    from_date AS Original,
+    DATE_FORMAT(from_date, '%M %d %Y') AS version1,
+    DATE_FORMAT(from_date, '%m %d %Y') AS version2,
+    DATE_FORMAT(from_date, '%m, %d %Y') AS version3,
+    CONCAT(from_date, ' ', to_date) as ORiginl2
+FROM
+    salaries;
+
+use employees;
+
+SELECT 
+    first_name,
+    last_name,
+    CONCAT(LEFT(first_name, 1), LEFT(last_name, 1)) AS INITIALS
+FROM
+    employees;
+
+SELECT 
+    COUNT(*)
+FROM
+    EMPLOYEES
+WHERE
+    FIRST_NAME = 'ELVIS'
+        AND LAST_NAME = 'ROSSI';
+
+
+SELECT 
+    COUNT(*)
+FROM
+    EMPLOYEES
+WHERE
+    FIRST_NAME IN ('ZIELINSKI' , 'SUMANT', 'ANNEKE', 'EBBE', 'GAO')
+        OR LAST_NAME IN ('ANNEKE' , 'GAO', 'ZIELINSKI')
+        AND GENDER = 'F';
+        
+SELECT 
+    *
+FROM
+    TITLES
+WHERE
+    TO_DATE IS NULL;
+        
+SELECT 
+    *
+FROM
+    INFORMATION_SCHEMA.PLUGINS
+WHERE
+    PLUGIN_LIBRARY IS NULL;
+        
+SELECT 
+    *
+FROM
+    INFORMATION_SCHEMA.PLUGINS
+WHERE
+    PLUGIN_LIBRARY IS NOT NULL;
+
+
+
+SELECT * FROM SALARIES;
+
+SELECT COUNT(*) FROM SALARIES WHERE SALARY > 66596;
+
+SELECT COUNT(*) FROM SALARIES WHERE SALARY < 66596;
+
+SELECT COUNT(*) FROM SALARIES WHERE SALARY < 66596 AND FROM_DATE > '1987-06-26';
+
+SELECT * FROM SALARIES WHERE SALARY > 120000 AND FROM_DATE < '1987-06-26';
+
+SELECT * FROM SALARIES WHERE SALARY > 155000 AND FROM_DATE > '1987-06-26';
+
+SELECT COUNT(*) FROM SALARIES WHERE SALARY > 155000 AND FROM_DATE > '1987-06-26';
+
+SELECT * FROM EMPLOYEES WHERE EMP_NO IN ( 43624, 98169, 109334, 109334, 109334, 296857, 493158);
+
+SELECT * FROM EMPLOYEES WHERE EMP_NO IN ( 43624, 43624, 47978, 109334, 109334, 253939, 254466);
+
+
+use employees;
+SELECT dept_name 
+FROM departments d
+JOIN dept_emp de ON d.dept_no = de.dept_no
+WHERE de.emp_no IN ( 
+SELECT emp_no
+FROM salaries
+WHERE salary >= (SELECT max(salary)
+FROM salaries));
+
+SELECT first_name, last_name
+FROM employees
+WHERE emp_no IN ( 
+SELECT emp_no
+FROM salaries
+WHERE salary >= (SELECT max(salary)
+FROM salaries));
+
+Wild card use 
+
+use employees;
+select * from employees;
+select * from employees where first_name like 'E%';
+select * from employees where first_name like 'E%' and last_name like '_e%';
+select count(*)from employees where first_name like 'E%' and last_name like '_e%';
+select * from employees where first_name like 'Elv%' and last_name like '_e%' and last_name not like '%_n';
+
+Between functions 
+
+use employees;
+select * from salaries;
+select * from salaries where salary >='66074'and salary <= '76884';
+select count(*) from salaries where salary >='66074'and salary <= '76884';
+select count(*) from salaries where salary between '66074'and salary < '76884';
+select count(*) from salaries where salary between '66074'and '76884';
+
+select * from employees;
+select * from employees where birth_date between '1959-12-03' and '1963-06-07';
+select count(*) from employees where birth_date between '1959-12-03' and '1963-06-07';
+select * from employees where birth_date not between '1959-12-03' and '1963-06-07';
+select count(*) from employees where birth_date not between '1959-12-03' and '1963-06-07';
+
+order by 
+
+use employees;
+select * from salaries order by from_date desc, salary desc;
+
+select * from employees;
+select * from employees where first_name ='Elvis' order by birth_date desc, gender desc, last_name asc;
+select count(*) from employees where first_name ='Elvis' order by birth_date desc, gender desc, last_name asc;
+
+Limit functions 
+
+select * from employees;
+
+select * from employees Limit 0, 20;
+select * from employees Limit 20, 20;
+
+select * from employees order by emp_no Limit 0, 20;
+select * from employees order by emp_no Limit 0, 20;
+
+select * from employees limit 100000;
+
+distinct functions 
+
+use emloyees;
+
+select distinct first_name, last_name from employees;
+select count(distinct first_name, last_name) from employees;
+select distinct salary from salaries where salary > 60000;
+select count(distinct salary) from salaries where salary <= 60000;
+
+Sub-select function 
+
+use emloyees;
+
+SELECT DISTINCT
+    first_name
+FROM
+    employees
+WHERE
+    first_name LIKE 'E%';
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    first_name IN (SELECT DISTINCT
+            first_name
+        FROM
+            employees
+        WHERE
+            first_name LIKE 'E%');
+
+
+   
+-- Assignment Debugging SQL statements 
+
+
+SELECT 
+    first_name, last_name
+FROM
+    employees;
+SELECT 
+    emp_no, salary
+FROM
+    salaries;
+SELECT 
+    first_name AS 'firstNAme', last_name AS 'lastName'
+FROM
+    employees;
+SELECT 
+    first_name, last_name, CONCAT(first_name, ' ', last_name)
+FROM
+    employees;
+SELECT 
+    first_name,
+    last_name,
+    CONCAT(first_name, ' ', last_name) AS 'Name'
+FROM
+    employees;
+SELECT 
+    salary,
+    salary * .01 AS 'weekly',
+    salary * .01 * 4 AS 'monthly',
+    salary * .01 * 4 * 52 AS 'yearly'
+FROM
+    salaries;
+SELECT 
+    salary * .01 * 4 AS 'monthly', salary * .01 * 52 AS 'yearly'
+FROM
+    salaries;
+SELECT 
+    from_date AS original, DATE_FORMAT(from_date, '%M %d %YYYY')
+FROM
+    salaries;
+SELECT 
+    from_date AS original, DATE_FORMAT(from_date, '%M %d %Y')
+FROM
+    salaries;
+SELECT 
+    first_name,
+    last_name,
+    CONCAT(LEFT(first_name, 1), LEFT(last_name, 1)) AS Initials
+FROM
+    employees;
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    first_name IN ('Elvis' , 'Chenye')
+        AND last_name IN ('Velasco');
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    first_name IN ('Elvis' , 'Sumant', 'Berni', 'Lillian');
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    first_name LIKE 'Elv%'
+        AND last_name LIKE '_e%';
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    birth_date BETWEEN '1954-05-01' AND '1956-04-20';
+SELECT 
+    *
+FROM
+    employees
+ORDER BY first_name DESC;
+SELECT 
+    *
+FROM
+    employees
+ORDER BY emp_no
+LIMIT 0 , 20;
+
+GROUP BY FUNCTION 
+
+select first_name as 'unknown', count(*) from employees group by first_name limit 23;
+select birth_date, count(*) from employees group by birth_date;
+select salary, (salary*2)*100/2 , count(*) from salaries group by salary order by salary desc;
+
+select salary, count(*) as 'sal_count' from salaries group by salary order by 'sal_count' desc;
+
+select salary, count(*) as sal_count from salaries group by salary order by sal_count desc;
+
+
+SELECT * FROM SALARIES;
+
+SELECT DATE_FORMAT( FROM_DATE, '%Y') FROM SALARIES;
+
+SELECT DATE_FORMAT( FROM_DATE, '%Y') AS SALARY_YEAR, MIN(SALARY) FROM SALARIES GROUP BY SALARY_YEAR;
+
+SELECT DATE_FORMAT( FROM_DATE, '%Y') AS SALARY_YEAR, MAX(SALARY) FROM SALARIES GROUP BY SALARY_YEAR;
+
+SELECT * FROM SALARIES;
+
+SELECT DATE_FORMAT( FROM_DATE, '%Y') FROM SALARIES;
+
+SELECT DATE_FORMAT( FROM_DATE, '%Y') AS SALARY_YEAR, MIN(SALARY) FROM SALARIES GROUP BY SALARY_YEAR;
+
+SELECT DATE_FORMAT( FROM_DATE, '%Y') AS SALARY_YEAR, MAX(SALARY) FROM SALARIES GROUP BY SALARY_YEAR;
