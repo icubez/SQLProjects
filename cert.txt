@@ -7,10 +7,13 @@ Create Report Showing by year: total, max, min, and average salary
 • Hint use NOT IN clause
 
 
-			:::Answer:::
+			:::Solution 1:::
 
-       SELECT 
-    current_year, MAX(sal), MIN(sal), AVG(sal)
+         
+    
+
+    SELECT 
+    current_year, SUM(sal), MAX(sal), MIN(sal), AVG(sal)
 FROM
     (SELECT 
         salary AS sal, DATE_FORMAT(from_date, '%Y') AS Current_Year
@@ -19,6 +22,23 @@ FROM
     WHERE
         emp_no NOT IN (111877 , 111784, 111692, 111534, 111400, 111133, 111035, 110854, 110800, 110765, 110725, 110567, 110511, 110420, 110386, 110344, 110303, 110228, 110183, 110114, 110085, 110039, 110022)) salaries
 GROUP BY current_year;
+
+
+			:::Solution 2:::
     
 
-    
+SELECT 
+    date_format(from_date, '%Y') as salary_year,
+    sum(salary) as sum_salary,
+    max(salary) as max_salary,
+    min(salary) as min_salary,
+    avg(salary) as avg_salary
+FROM
+    salaries
+WHERE
+    emp_no NOT IN (SELECT DISTINCT
+            emp_no
+        FROM
+            dept_manager) group by salary_year;
+        
+        
