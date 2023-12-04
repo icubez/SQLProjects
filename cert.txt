@@ -1,0 +1,24 @@
+			:::Question:::
+
+Create Report Showing by year: total, max, min, and average salary
+• Exclude Managers from Report
+• Managers are defined in the table DEPT_MANAGER
+• Don’t worry about active dates at this time.
+• Hint use NOT IN clause
+
+
+			:::Answer:::
+
+       SELECT 
+    current_year, MAX(sal), MIN(sal), AVG(sal)
+FROM
+    (SELECT 
+        salary AS sal, DATE_FORMAT(from_date, '%Y') AS Current_Year
+    FROM
+        salaries
+    WHERE
+        emp_no NOT IN (111877 , 111784, 111692, 111534, 111400, 111133, 111035, 110854, 110800, 110765, 110725, 110567, 110511, 110420, 110386, 110344, 110303, 110228, 110183, 110114, 110085, 110039, 110022)) salaries
+GROUP BY current_year;
+    
+
+    
