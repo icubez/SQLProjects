@@ -375,3 +375,47 @@ SELECT DATE_FORMAT( FROM_DATE, '%Y') FROM SALARIES;
 SELECT DATE_FORMAT( FROM_DATE, '%Y') AS SALARY_YEAR, MIN(SALARY) FROM SALARIES GROUP BY SALARY_YEAR;
 
 SELECT DATE_FORMAT( FROM_DATE, '%Y') AS SALARY_YEAR, MAX(SALARY) FROM SALARIES GROUP BY SALARY_YEAR;
+
+use employees;
+SELECT 
+    DATE_FORMAT(from_date, '%Y') AS current_year,  
+    AVG(salary) AS avg_salary,
+    MAX(salary) AS max_salary,
+    MIN(salary) AS min_salary 
+    FROM
+    salaries
+    group by current_year;
+    
+    
+
+    SELECT 
+    current_year, SUM(sal), MAX(sal), MIN(sal), AVG(sal)
+FROM
+    (SELECT 
+        salary AS sal, DATE_FORMAT(from_date, '%Y') AS Current_Year
+    FROM
+        salaries
+    WHERE
+        emp_no NOT IN (111877 , 111784, 111692, 111534, 111400, 111133, 111035, 110854, 110800, 110765, 110725, 110567, 110511, 110420, 110386, 110344, 110303, 110228, 110183, 110114, 110085, 110039, 110022)) salaries
+GROUP BY current_year;
+        
+        select * from salaries;
+        select * from dept_manager;
+        
+        select distinct emp_no from dept_manager;
+        
+        select * from salaries where emp_no not in (select distinct emp_no from dept_manager);
+        
+SELECT 
+    date_format(from_date, '%Y') as salary_year,
+    sum(salary) as sum_salary,
+    max(salary) as max_salary,
+    min(salary) as min_salary,
+    avg(salary) as avg_salary
+FROM
+    salaries
+WHERE
+    emp_no NOT IN (SELECT DISTINCT
+            emp_no
+        FROM
+            dept_manager) group by salary_year;
