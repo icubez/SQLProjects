@@ -82,15 +82,61 @@ ORDER BY dept_name , last_name;
 
 
 
+				:::Solution 1:::
 
-				:::Solution :::
+Write a Not In statement first to help visualize the query 
+
+Below I used the Not equal to statement to filter out the titles with to_date = ‘9999-01-01’
+
+SELECT * FROM TITLES
+WHERE TO_DATE <> '9999-01-01';
+
+Now to the solution we can simple add the above in the 'where' clause
 
 SELECT 
-    TITLE, FROM_DATE, TO_DATE, FIRST_NAME, LAST_NAME
+   TITLE, FROM_DATE, TO_DATE, FIRST_NAME, LAST_NAME
 FROM
     EMPLOYEES AS EMP
         LEFT OUTER JOIN
     TITLES AS T ON T.EMP_NO = EMP.EMP_NO
 WHERE
     TO_DATE <> '9999-01-01'
-ORDER BY LAST_NAME;
+ORDER BY FIRST_NAME, LAST_NAME;
+
+				:::Solution 1:::
+
+Alternatively we can use the not in statement 
+
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    emp_no NOT IN (SELECT 
+            emp_no
+        FROM
+            titles
+        WHERE
+            to_date = '9999-01-01');
+
+And the solution 
+
+SELECT 
+    TITLE, FROM_DATE, TO_DATE, FIRST_NAME, LAST_NAME
+FROM
+    employees AS emp
+        LEFT OUTER JOIN
+    titles AS t ON t.emp_no = emp.emp_no
+WHERE
+    to_date NOT IN (SELECT 
+            to_date
+        FROM
+            titles
+        WHERE
+            to_date = '9999-01-01')
+ORDER BY first_name , last_name;
+
+-- CHECK : THE OUTPUT OF FIRST SOLUTION AND SECOND SOLUTION ARE SAME, VERIFY THAT THE DATE '9999-01-01' DOES NOT APPEAR 
+
+
+
