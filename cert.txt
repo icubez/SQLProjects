@@ -72,5 +72,25 @@ WHERE
 ORDER BY dept_name , last_name;
 
    
+
+				:::Project Sample:::
         
-        
+• Using a LEFT outer join create a report to show employees without a current title
+• Titles are in the titles table
+• Current titles have a to_date equal to ‘9999-01-01’
+• Write a NOT IN statement first to help you visualize the query
+
+
+
+
+				:::Solution :::
+
+SELECT 
+    TITLE, FROM_DATE, TO_DATE, FIRST_NAME, LAST_NAME
+FROM
+    EMPLOYEES AS EMP
+        LEFT OUTER JOIN
+    TITLES AS T ON T.EMP_NO = EMP.EMP_NO
+WHERE
+    TO_DATE <> '9999-01-01'
+ORDER BY LAST_NAME;
